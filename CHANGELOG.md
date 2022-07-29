@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI to check fmt, lint, build and test
 - CI to check `CHANGELOG.md`
 - CI to publish docker image
+- Add renovate to manage dependencies
