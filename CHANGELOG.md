@@ -14,3 +14,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Request inspection` of httpbin
 - CI to check fmt, lint, build and test
 - CI to check `CHANGELOG.md`
+- CI to publish docker image
