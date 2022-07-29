@@ -41,6 +41,7 @@ jobs:
         with:
           file: Dockerfile
           platforms: linux/amd64
+          push: true
           tags: |
             duskmoon/httpbin-rs:latest
             duskmoon/httpbin-rs:${{ steps.get_version.outputs.VERSION }}
@@ -77,6 +78,7 @@ jobs:
         with:
           file: Dockerfile
           platforms: linux/amd64
+          push: true
           tags: |
             duskmoon/httpbin-rs:beta
             ghcr.io/duskmoon314/httpbin-rs:beta
