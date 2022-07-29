@@ -9,5 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Use `clap` to parse arg
 - `HTTP Methods` of httpbin
 - `Request inspection` of httpbin
