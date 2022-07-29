@@ -20,6 +20,8 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - name: cache dependencies
+        uses: Swatinem/rust-cache@v2
       - name: check fmt
         uses: actions-rs/cargo@v1
         with:
