@@ -6,6 +6,7 @@ use poem_openapi::{OpenApiService, Tags};
 
 pub(crate) mod http_methods;
 pub(crate) mod request_inspection;
+pub(crate) mod status_codes;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about)]
@@ -29,6 +30,10 @@ enum ApiTags {
     #[oai(rename = "HTTP Methods")]
     HttpMethods,
 
+    /// Generates responses with given status code
+    #[oai(rename = "Status codes")]
+    StatusCodes,
+
     /// Inspect the request data
     #[oai(rename = "Request Inspection")]
     RequestInspection,
@@ -44,7 +49,11 @@ async fn main() -> Result<(), std::io::Error> {
     tracing_subscriber::fmt::init();
 
     let api_service = OpenApiService::new(
-        (http_methods::Api, request_inspection::Api),
+        (
+            http_methods::Api,
+            status_codes::Api,
+            request_inspection::Api,
+        ),
         env!("CARGO_PKG_NAME"),
         env!("CARGO_PKG_VERSION"),
     )

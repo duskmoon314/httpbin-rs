@@ -547,6 +547,7 @@ dependencies = [
  "clap",
  "poem",
  "poem-openapi",
+ "rand",
  "serde",
  "serde_json",
  "serde_urlencoded",

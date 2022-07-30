@@ -8,7 +8,7 @@ use poem_openapi::{payload::Json, Object, OpenApi};
 use super::ApiTags;
 
 #[derive(Debug, Clone, Object)]
-pub struct HttpRes {
+struct HttpRes {
     method: String,
     headers: HashMap<String, String>,
     uri: String,
