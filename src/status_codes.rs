@@ -259,7 +259,7 @@ pub struct Api;
 
 #[OpenApi]
 impl Api {
-    /// Return status code or random status code if more than one are given
+    /// Return status code or random status code if more than one is given
     #[oai(
         path = "/status/:codes",
         method = "get",

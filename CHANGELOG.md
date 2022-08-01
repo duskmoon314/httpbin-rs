@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `HTTP Methods` of httpbin
 - `Request inspection` of httpbin
 - `Status codes` of httpbin
+- `Anything` of httpbin
+- `Data` for base64, UUID
 - CI to check fmt, lint, build and test
 - CI to check `CHANGELOG.md`
 - CI to publish docker image

@@ -1,6 +1,6 @@
 # httpbin-rs
 
-HTTP Request & Response Service just like [httpbin](http://httpbin.org) but powered by Rust & Poem
+HTTP Request & Response Service pretty like [httpbin](http://httpbin.org) but powered by Rust & Poem
 
 ## License
 

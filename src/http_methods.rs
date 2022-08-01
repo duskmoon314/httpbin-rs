@@ -117,4 +117,18 @@ impl Api {
     async fn patch(&self, req: HttpRes) -> Json<HttpRes> {
         Json(req)
     }
+
+    /// Returns anything passed in request data.
+    #[oai(
+        path = "/anything/:anything",
+        method = "get",
+        method = "post",
+        method = "put",
+        method = "delete",
+        method = "patch",
+        tag = "ApiTags::Anything"
+    )]
+    async fn anything(&self, req: HttpRes) -> Json<HttpRes> {
+        Json(req)
+    }
 }

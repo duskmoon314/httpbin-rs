@@ -3,7 +3,7 @@ name = "httpbin-rs"
 version = "0.1.0"
 edition = "2021"
 author = "duskmoon (Campbell He) <kp.campbell.he@duskmoon314.com>"
-description = "HTTP Request & Response Service just like [httpbin](http://httpbin.org) but powered by Rust & Poem"
+description = "HTTP Request & Response Service pretty like [httpbin](http://httpbin.org) but powered by Rust & Poem"
 license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -16,6 +16,7 @@ poem-openapi = { version = "2.0.6", features = [
     "swagger-ui",
     "rapidoc",
     "redoc",
+    "uuid",
 ] }
 rand = "0.8.5"
 serde = "1.0.140"
@@ -23,3 +24,4 @@ serde_json = "1.0.82"
 serde_urlencoded = "0.7.1"
 tokio = { version = "1.20.1", features = ["macros", "rt-multi-thread"] }
 tracing-subscriber = { version = "0.3.15", features = ["env-filter"] }
+uuid = { version = "1.1.2", features = ["v3", "v4", "v5"] }

@@ -4,6 +4,7 @@ use clap::Parser;
 use poem::{listener::TcpListener, Route, Server};
 use poem_openapi::{OpenApiService, Tags};
 
+pub(crate) mod data;
 pub(crate) mod http_methods;
 pub(crate) mod request_inspection;
 pub(crate) mod status_codes;
@@ -37,6 +38,12 @@ enum ApiTags {
     /// Inspect the request data
     #[oai(rename = "Request Inspection")]
     RequestInspection,
+
+    /// Returns anything that is passed to request
+    Anything,
+
+    /// Generates useful data
+    Data,
 }
 
 #[tokio::main]
@@ -53,6 +60,7 @@ async fn main() -> Result<(), std::io::Error> {
             http_methods::Api,
             status_codes::Api,
             request_inspection::Api,
+            data::Api,
         ),
         env!("CARGO_PKG_NAME"),
         env!("CARGO_PKG_VERSION"),
