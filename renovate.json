@@ -6,5 +6,19 @@
   "labels": [
     "dependencies",
     "no changelog"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^poem"
+      ],
+      "groupName": "poem crates"
+    },
+    {
+      "matchPackagePatterns": [
+        "^serde"
+      ],
+      "groupName": "serde crates"
+    }
   ]
 }
