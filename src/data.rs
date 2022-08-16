@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use poem_openapi::{
     payload::{Json, PlainText},
     ApiResponse, Object, OpenApi,
@@ -19,6 +21,22 @@ enum Base64Res {
 struct UuidReq {
     namespace: Uuid,
     name: String,
+}
+
+#[derive(Debug, Clone, Object)]
+struct CronReq {
+    cron: String,
+    num: Option<usize>,
+    tz: Option<String>,
+}
+
+#[derive(ApiResponse)]
+enum CronRes {
+    #[oai(status = 200)]
+    Ok(Json<Vec<String>>),
+
+    #[oai(status = 400)]
+    BadRequest(PlainText<String>),
 }
 
 pub struct Api;
@@ -46,7 +64,7 @@ impl Api {
     /// Generate UUID v3.
     #[oai(path = "/uuid/v3", method = "post", tag = "ApiTags::Data")]
     async fn uuid_v3(&self, req: Json<UuidReq>) -> PlainText<String> {
-        PlainText(Uuid::new_v3(&req.0.namespace, req.0.name.as_bytes()).to_string())
+        PlainText(Uuid::new_v3(&req.namespace, req.name.as_bytes()).to_string())
     }
 
     /// Generate UUID v4.
@@ -63,6 +81,32 @@ impl Api {
     /// Generate UUID v5.
     #[oai(path = "/uuid/v5", method = "post", tag = "ApiTags::Data")]
     async fn uuid_v5(&self, req: Json<UuidReq>) -> PlainText<String> {
-        PlainText(Uuid::new_v5(&req.0.namespace, req.0.name.as_bytes()).to_string())
+        PlainText(Uuid::new_v5(&req.namespace, req.name.as_bytes()).to_string())
+    }
+
+    /// Get upcoming cron schedule.
+    #[oai(path = "/cron", method = "post", tag = "ApiTags::Data")]
+    async fn cron(&self, req: Json<CronReq>) -> CronRes {
+        let schedule = match cron::Schedule::from_str(&req.cron) {
+            Ok(schedule) => schedule,
+            Err(err) => return CronRes::BadRequest(PlainText(format!("{}", err))),
+        };
+        let num = req.num.unwrap_or(10);
+        let tz: chrono_tz::Tz = match &req
+            .tz
+            .clone()
+            .unwrap_or_else(|| "UTC".to_string())
+            .parse::<chrono_tz::Tz>()
+        {
+            Ok(tz) => *tz,
+            Err(err) => return CronRes::BadRequest(PlainText(err.to_string())),
+        };
+        CronRes::Ok(Json(
+            schedule
+                .upcoming(tz)
+                .take(num)
+                .map(|t| format!("{}", t))
+                .collect(),
+        ))
     }
 }

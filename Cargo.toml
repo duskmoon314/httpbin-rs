@@ -2,7 +2,7 @@
 name = "httpbin-rs"
 version = "0.1.0"
 edition = "2021"
-author = "duskmoon (Campbell He) <kp.campbell.he@duskmoon314.com>"
+authors = ["duskmoon (Campbell He) <kp.campbell.he@duskmoon314.com>"]
 description = "HTTP Request & Response Service pretty like [httpbin](http://httpbin.org) but powered by Rust & Poem"
 license = "MIT OR Apache-2.0"
 
@@ -10,7 +10,10 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 base64 = "0.13.0"
+chrono = "0.4.22"
+chrono-tz = "0.6.3"
 clap = { version = "3.2.17", features = ["derive"] }
+cron = "0.11.0"
 poem = "1.3.38"
 poem-openapi = { version = "2.0.8", features = [
     "swagger-ui",
