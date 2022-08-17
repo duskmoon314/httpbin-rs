@@ -1,7 +1,7 @@
 use std::net::{IpAddr, Ipv4Addr};
 
 use clap::Parser;
-use poem::{listener::TcpListener, Route, Server};
+use poem::{listener::TcpListener, middleware, EndpointExt, Route, Server};
 use poem_openapi::{OpenApiService, Tags};
 
 pub(crate) mod data;
@@ -83,7 +83,8 @@ async fn main() -> Result<(), std::io::Error> {
                 .nest("/", api_service)
                 .nest("/swagger", swagger)
                 .nest("/rapidoc", rapidoc)
-                .nest("/redoc", redoc),
+                .nest("/redoc", redoc)
+                .with(middleware::Tracing),
         )
         .await
 }
