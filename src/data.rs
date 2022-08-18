@@ -3,18 +3,36 @@ use std::str::FromStr;
 use digest::DynDigest;
 use poem_openapi::{
     param::Path,
-    payload::{Json, PlainText},
+    payload::{Binary, Json, PlainText, Response},
     types::Example,
-    ApiResponse, Enum, Object, OpenApi,
+    ApiRequest, ApiResponse, Enum, Object, OpenApi,
 };
 use uuid::Uuid;
 
 use super::ApiTags;
 
+#[derive(ApiRequest)]
+enum Base64Req {
+    Binary(Binary<Vec<u8>>),
+    Text(PlainText<String>),
+}
+
+impl AsRef<[u8]> for Base64Req {
+    fn as_ref(&self) -> &[u8] {
+        match self {
+            Base64Req::Binary(binary) => binary.as_ref(),
+            Base64Req::Text(text) => text.as_bytes(),
+        }
+    }
+}
+
 #[derive(ApiResponse)]
 enum Base64Res {
     #[oai(status = 200)]
-    Ok(PlainText<String>),
+    OkText(PlainText<String>),
+
+    #[oai(status = 200)]
+    OkBinary(Binary<Vec<u8>>),
 
     #[oai(status = 400)]
     BadRequest(PlainText<String>),
@@ -71,6 +89,21 @@ enum Hasher {
     Sha512_256,
 }
 
+#[derive(ApiRequest)]
+enum HashReq {
+    Binary(Binary<Vec<u8>>),
+    Text(PlainText<String>),
+}
+
+impl AsRef<[u8]> for HashReq {
+    fn as_ref(&self) -> &[u8] {
+        match self {
+            HashReq::Binary(binary) => binary.as_ref(),
+            HashReq::Text(text) => text.as_bytes(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Object)]
 struct HashRes {
     slice: Vec<u8>,
@@ -85,20 +118,27 @@ pub struct Api;
 impl Api {
     /// Decode base64 encoded string.
     #[oai(path = "/base64/decode", method = "post", tag = "ApiTags::Data")]
-    async fn base64_decode(&self, base64: String) -> Base64Res {
-        match base64::decode(&base64) {
-            Ok(decoded) => match String::from_utf8(decoded) {
-                Ok(decoded) => Base64Res::Ok(PlainText(decoded)),
-                Err(err) => Base64Res::BadRequest(PlainText(format!("{}", err))),
+    async fn base64_decode(&self, base64: PlainText<String>) -> Response<Base64Res> {
+        match base64::decode::<&[u8]>(base64.as_ref()) {
+            Ok(decoded) => match String::from_utf8(decoded.clone()) {
+                Ok(decoded) => Response::new(Base64Res::OkText(PlainText(decoded))),
+                Err(_err) => {
+                    let kind = infer::get(&decoded);
+                    Response::new(Base64Res::OkBinary(Binary(decoded))).header(
+                        "content-type",
+                        kind.map(|k| k.mime_type())
+                            .unwrap_or("application/octet-stream"),
+                    )
+                }
             },
-            Err(err) => Base64Res::BadRequest(PlainText(format!("{}", err))),
+            Err(err) => Response::new(Base64Res::BadRequest(PlainText(format!("{}", err)))),
         }
     }
 
-    /// Encode string as base64.
+    /// Encode data as base64.
     #[oai(path = "/base64/encode", method = "post", tag = "ApiTags::Data")]
-    async fn base64_encode(&self, string: String) -> Base64Res {
-        Base64Res::Ok(PlainText(base64::encode(&string)))
+    async fn base64_encode(&self, data: Base64Req) -> Base64Res {
+        Base64Res::OkText(PlainText(base64::encode(data)))
     }
 
     /// Generate UUID v3.
@@ -152,7 +192,7 @@ impl Api {
 
     /// Get hashed string.
     #[oai(path = "/hash/:hasher", method = "post", tag = "ApiTags::Data")]
-    async fn hash(&self, hasher: Path<Hasher>, string: String) -> Json<HashRes> {
+    async fn hash(&self, hasher: Path<Hasher>, data: HashReq) -> Json<HashRes> {
         let mut hasher: Box<dyn DynDigest> = match hasher.0 {
             Hasher::Md5 => Box::new(md5::Md5::default()),
             Hasher::Sha224 => Box::new(sha2::Sha224::default()),
@@ -162,7 +202,7 @@ impl Api {
             Hasher::Sha512_224 => Box::new(sha2::Sha512_224::default()),
             Hasher::Sha512_256 => Box::new(sha2::Sha512_256::default()),
         };
-        hasher.update(string.as_bytes());
+        hasher.update(data.as_ref());
         let hash = hasher.finalize_reset();
         let hash = hash.as_ref();
         Json(HashRes {
