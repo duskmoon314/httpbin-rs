@@ -76,6 +76,8 @@ async fn main() -> Result<(), std::io::Error> {
     let swagger = api_service.swagger_ui();
     let rapidoc = api_service.rapidoc();
     let redoc = api_service.redoc();
+    let spec_json = api_service.spec_endpoint();
+    let spec_yaml = api_service.spec_endpoint_yaml();
 
     Server::new(TcpListener::bind(format!("{}:{}", args.ip, args.port)))
         .run(
@@ -84,6 +86,8 @@ async fn main() -> Result<(), std::io::Error> {
                 .nest("/swagger", swagger)
                 .nest("/rapidoc", rapidoc)
                 .nest("/redoc", redoc)
+                .nest("/spec/json", spec_json)
+                .nest("/spec/yaml", spec_yaml)
                 .with(middleware::Tracing),
         )
         .await

@@ -1,8 +1,11 @@
 use std::str::FromStr;
 
+use digest::DynDigest;
 use poem_openapi::{
+    param::Path,
     payload::{Json, PlainText},
-    ApiResponse, Object, OpenApi,
+    types::Example,
+    ApiResponse, Enum, Object, OpenApi,
 };
 use uuid::Uuid;
 
@@ -23,11 +26,28 @@ struct UuidReq {
     name: String,
 }
 
-#[derive(Debug, Clone, Object)]
+#[derive(Debug, Default, Clone, Object)]
+#[oai(default, example)]
 struct CronReq {
     cron: String,
+    /// number of upcoming schedules
+    ///
+    /// default: null (will be treated as 10)
     num: Option<usize>,
+    /// timezone to use for the upcoming schedules
+    ///
+    /// default: null (will be treated as "UTC")
     tz: Option<String>,
+}
+
+impl Example for CronReq {
+    fn example() -> Self {
+        CronReq {
+            cron: "1 2 3 4 5 6".to_string(),
+            num: Some(8),
+            tz: Some("Hongkong".to_string()),
+        }
+    }
 }
 
 #[derive(ApiResponse)]
@@ -37,6 +57,26 @@ enum CronRes {
 
     #[oai(status = 400)]
     BadRequest(PlainText<String>),
+}
+
+#[derive(Debug, Clone, Enum)]
+#[non_exhaustive]
+enum Hasher {
+    Md5,
+    Sha224,
+    Sha256,
+    Sha384,
+    Sha512,
+    Sha512_224,
+    Sha512_256,
+}
+
+#[derive(Debug, Clone, Object)]
+struct HashRes {
+    slice: Vec<u8>,
+    slice_hex: String,
+    string_hex: String,
+    string_base64: String,
 }
 
 pub struct Api;
@@ -108,5 +148,31 @@ impl Api {
                 .map(|t| format!("{}", t))
                 .collect(),
         ))
+    }
+
+    /// Get hashed string.
+    #[oai(path = "/hash/:hasher", method = "post", tag = "ApiTags::Data")]
+    async fn hash(&self, hasher: Path<Hasher>, string: String) -> Json<HashRes> {
+        let mut hasher: Box<dyn DynDigest> = match hasher.0 {
+            Hasher::Md5 => Box::new(md5::Md5::default()),
+            Hasher::Sha224 => Box::new(sha2::Sha224::default()),
+            Hasher::Sha256 => Box::new(sha2::Sha256::default()),
+            Hasher::Sha384 => Box::new(sha2::Sha384::default()),
+            Hasher::Sha512 => Box::new(sha2::Sha512::default()),
+            Hasher::Sha512_224 => Box::new(sha2::Sha512_224::default()),
+            Hasher::Sha512_256 => Box::new(sha2::Sha512_256::default()),
+        };
+        hasher.update(string.as_bytes());
+        let hash = hasher.finalize_reset();
+        let hash = hash.as_ref();
+        Json(HashRes {
+            slice: hash.to_vec(),
+            slice_hex: format!("{:X?}", hash),
+            string_hex: hash
+                .iter()
+                .map(|b| format!("{:02X}", b))
+                .collect::<String>(),
+            string_base64: base64::encode(hash),
+        })
     }
 }
