@@ -2,7 +2,7 @@ use std::net::{IpAddr, Ipv4Addr};
 
 use clap::Parser;
 use poem::{listener::TcpListener, middleware, EndpointExt, Route, Server};
-use poem_openapi::{OpenApiService, Tags};
+use poem_openapi::{ContactObject, ExternalDocumentObject, OpenApiService, Tags};
 
 pub(crate) mod data;
 pub(crate) mod http_methods;
@@ -67,6 +67,16 @@ async fn main() -> Result<(), std::io::Error> {
     )
     .description(env!("CARGO_PKG_DESCRIPTION"))
     .license(env!("CARGO_PKG_LICENSE"))
+    .contact(
+        ContactObject::new()
+            .name("duskmoon (developer)")
+            .url("https://duskmoon314.com")
+            .email("kp.campbell.he@duskmoon314.com"),
+    )
+    .external_document(
+        ExternalDocumentObject::new("https://github.com/duskmoon314/httpbin-rs")
+            .description("Source code (GitHub)"),
+    )
     .server(if args.address.is_some() {
         args.address.unwrap()
     } else {

@@ -78,6 +78,7 @@ enum CronRes {
 }
 
 #[derive(Debug, Clone, Enum)]
+#[oai(rename_all = "snake_case")]
 #[non_exhaustive]
 enum Hasher {
     Md5,

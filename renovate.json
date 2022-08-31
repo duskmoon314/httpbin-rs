@@ -19,6 +19,14 @@
         "^serde"
       ],
       "groupName": "serde crates"
+    },
+    {
+      "matchPackagePatterns": [
+        "digest",
+        "md-5",
+        "sha2"
+      ],
+      "groupName": "crypto crates"
     }
   ]
 }
