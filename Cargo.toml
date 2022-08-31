@@ -21,7 +21,7 @@ clap = { version = "3.2.19", features = ["derive"] }
 cron = "0.11.0"
 digest = "0.10.3"
 infer = "0.9.0"
-md-5 = "0.10.1"
+md-5 = "0.10.2"
 poem = "1.3.40"
 poem-openapi = { version = "2.0.10", features = [
     "swagger-ui",
