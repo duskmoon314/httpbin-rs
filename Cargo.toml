@@ -17,7 +17,7 @@ codegen-units = 1
 base64 = "0.13.0"
 chrono = "0.4.22"
 chrono-tz = "0.6.3"
-clap = { version = "3.2.19", features = ["derive"] }
+clap = { version = "3.2.20", features = ["derive"] }
 cron = "0.11.0"
 digest = "0.10.3"
 infer = "0.9.0"
