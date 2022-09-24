@@ -18,7 +18,7 @@ base64 = "0.13.0"
 chrono = "0.4.22"
 chrono-tz = "0.6.3"
 clap = { version = "3.2.21", features = ["derive"] }
-cron = "0.11.0"
+cron = "0.12.0"
 digest = "0.10.3"
 infer = "0.9.0"
 md-5 = "0.10.4"
