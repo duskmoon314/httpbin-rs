@@ -14,7 +14,7 @@ lto = "fat"
 codegen-units = 1
 
 [dependencies]
-base64 = "0.13.0"
+base64 = "0.13.1"
 chrono = "0.4.22"
 chrono-tz = "0.8.0"
 clap = { version = "4.0.22", features = ["derive"] }

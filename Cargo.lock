@@ -91,9 +91,9 @@ checksum = "b41b7ea54a0c9d92199de89e20e58d49f02f8e699814ef3fdf266f6f748d15c7"
 
 [[package]]
 name = "base64"
-version = "0.13.0"
+version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "904dfeac50f3cdaba28fc6f57fdcddb75f49ed61346676a78c4ffe55877802fd"
+checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
 
 [[package]]
 name = "bitflags"
@@ -256,7 +256,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94d4706de1b0fa5b132270cddffa8585166037822e260a944fe161acd137ca05"
 dependencies = [
  "aes-gcm",
- "base64 0.13.0",
+ "base64 0.13.1",
  "hkdf",
  "hmac",
  "percent-encoding",
@@ -545,7 +545,7 @@ version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4cff78e5788be1e0ab65b04d306b2ed5092c815ec97ec70f4ebd5aee158aa55d"
 dependencies = [
- "base64 0.13.0",
+ "base64 0.13.1",
  "bitflags",
  "bytes 1.2.0",
  "headers-core",
@@ -629,7 +629,7 @@ checksum = "496ce29bb5a52785b44e0f7ca2847ae0bb839c9bd28f69acac9b99d461c0c04c"
 name = "httpbin-rs"
 version = "0.1.0"
 dependencies = [
- "base64 0.13.0",
+ "base64 0.13.1",
  "chrono",
  "chrono-tz",
  "clap",
@@ -1078,7 +1078,7 @@ version = "2.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a48335571a3139209ab826e65790989e09d0e5e8d8070a7a0c54f626ac9886d"
 dependencies = [
- "base64 0.13.0",
+ "base64 0.13.1",
  "bytes 1.2.0",
  "derive_more",
  "futures-util",
