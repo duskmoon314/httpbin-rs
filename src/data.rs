@@ -26,6 +26,36 @@ impl AsRef<[u8]> for Base64Req {
     }
 }
 
+#[derive(Debug, Clone, Enum)]
+#[oai(rename_all = "snake_case")]
+#[non_exhaustive]
+enum Base64Config {
+    Bcrypt,
+    BinHex,
+    Crypt,
+    ImapMutf7,
+    Standard,
+    StandardNoPad,
+    UrlSafe,
+    UrlSafeNoPad,
+}
+
+#[allow(clippy::from_over_into)]
+impl Into<base64::Config> for Base64Config {
+    fn into(self) -> base64::Config {
+        match self {
+            Self::Bcrypt => base64::BCRYPT,
+            Self::BinHex => base64::BINHEX,
+            Self::Crypt => base64::CRYPT,
+            Self::ImapMutf7 => base64::IMAP_MUTF7,
+            Self::Standard => base64::STANDARD,
+            Self::StandardNoPad => base64::STANDARD_NO_PAD,
+            Self::UrlSafe => base64::URL_SAFE,
+            Self::UrlSafeNoPad => base64::URL_SAFE_NO_PAD,
+        }
+    }
+}
+
 #[derive(ApiResponse)]
 enum Base64Res {
     #[oai(status = 200)]
@@ -120,7 +150,22 @@ impl Api {
     /// Decode base64 encoded string.
     #[oai(path = "/base64/decode", method = "post", tag = "ApiTags::Data")]
     async fn base64_decode(&self, base64: PlainText<String>) -> Response<Base64Res> {
-        match base64::decode::<&[u8]>(base64.as_ref()) {
+        self.base64_decode_config(base64, Path(Base64Config::Standard))
+            .await
+    }
+
+    /// Decode base64 encoded string with config.
+    #[oai(
+        path = "/base64/decode/:config",
+        method = "post",
+        tag = "ApiTags::Data"
+    )]
+    async fn base64_decode_config(
+        &self,
+        base64: PlainText<String>,
+        config: Path<Base64Config>,
+    ) -> Response<Base64Res> {
+        match base64::decode_config::<&[u8]>(base64.as_ref(), config.0.into()) {
             Ok(decoded) => match String::from_utf8(decoded.clone()) {
                 Ok(decoded) => Response::new(Base64Res::OkText(PlainText(decoded))),
                 Err(_err) => {
@@ -137,9 +182,20 @@ impl Api {
     }
 
     /// Encode data as base64.
-    #[oai(path = "/base64/encode", method = "post", tag = "ApiTags::Data")]
+    #[oai(path = "/base64/encode/", method = "post", tag = "ApiTags::Data")]
     async fn base64_encode(&self, data: Base64Req) -> Base64Res {
-        Base64Res::OkText(PlainText(base64::encode(data)))
+        self.base64_encode_config(data, Path(Base64Config::Standard))
+            .await
+    }
+
+    /// Encode data as base64 with config.
+    #[oai(
+        path = "/base64/encode/:config",
+        method = "post",
+        tag = "ApiTags::Data"
+    )]
+    async fn base64_encode_config(&self, data: Base64Req, config: Path<Base64Config>) -> Base64Res {
+        Base64Res::OkText(PlainText(base64::encode_config(data, config.0.into())))
     }
 
     /// Generate UUID v3.
@@ -192,6 +248,7 @@ impl Api {
     }
 
     /// Get hashed string.
+    #[allow(clippy::box_default)]
     #[oai(path = "/hash/:hasher", method = "post", tag = "ApiTags::Data")]
     async fn hash(&self, hasher: Path<Hasher>, data: HashReq) -> Json<HashRes> {
         let mut hasher: Box<dyn DynDigest> = match hasher.0 {

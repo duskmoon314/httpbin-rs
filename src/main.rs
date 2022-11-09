@@ -98,6 +98,9 @@ async fn main() -> Result<(), std::io::Error> {
                 .nest("/redoc", redoc)
                 .nest("/spec/json", spec_json)
                 .nest("/spec/yaml", spec_yaml)
+                .with(middleware::NormalizePath::new(
+                    middleware::TrailingSlash::Trim,
+                ))
                 .with(middleware::Tracing),
         )
         .await
