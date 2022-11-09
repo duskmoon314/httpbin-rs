@@ -20,7 +20,7 @@ chrono-tz = "0.8.0"
 clap = { version = "4.0.22", features = ["derive"] }
 cron = "0.12.0"
 digest = "0.10.5"
-infer = "0.9.0"
+infer = "0.11.0"
 md-5 = "0.10.5"
 poem = "1.3.42"
 poem-openapi = { version = "2.0.12", features = [
