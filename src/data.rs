@@ -248,17 +248,16 @@ impl Api {
     }
 
     /// Get hashed string.
-    #[allow(clippy::box_default)]
     #[oai(path = "/hash/:hasher", method = "post", tag = "ApiTags::Data")]
     async fn hash(&self, hasher: Path<Hasher>, data: HashReq) -> Json<HashRes> {
         let mut hasher: Box<dyn DynDigest> = match hasher.0 {
-            Hasher::Md5 => Box::new(md5::Md5::default()),
-            Hasher::Sha224 => Box::new(sha2::Sha224::default()),
-            Hasher::Sha256 => Box::new(sha2::Sha256::default()),
-            Hasher::Sha384 => Box::new(sha2::Sha384::default()),
-            Hasher::Sha512 => Box::new(sha2::Sha512::default()),
-            Hasher::Sha512_224 => Box::new(sha2::Sha512_224::default()),
-            Hasher::Sha512_256 => Box::new(sha2::Sha512_256::default()),
+            Hasher::Md5 => Box::<md5::Md5>::default(),
+            Hasher::Sha224 => Box::<sha2::Sha224>::default(),
+            Hasher::Sha256 => Box::<sha2::Sha256>::default(),
+            Hasher::Sha384 => Box::<sha2::Sha384>::default(),
+            Hasher::Sha512 => Box::<sha2::Sha512>::default(),
+            Hasher::Sha512_224 => Box::<sha2::Sha512_224>::default(),
+            Hasher::Sha512_256 => Box::<sha2::Sha512_256>::default(),
         };
         hasher.update(data.as_ref());
         let hash = hasher.finalize_reset();
