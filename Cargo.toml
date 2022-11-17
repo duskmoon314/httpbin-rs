@@ -19,7 +19,7 @@ chrono = "0.4.22"
 chrono-tz = "0.8.0"
 clap = { version = "4.0.22", features = ["derive"] }
 cron = "0.12.0"
-digest = "0.10.5"
+digest = "0.10.6"
 infer = "0.11.0"
 md-5 = "0.10.5"
 poem = "1.3.48"
