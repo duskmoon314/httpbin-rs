@@ -1,0 +1,18 @@
+# Public HTTPBIN-RS Config File
+
+# All servers are run in docker containers
+ip = "0.0.0.0"
+port = 8080
+
+# The following configures the OpenAPI documentation
+[openapi]
+contact = { name = "duskmoon (developer)", url = "https://duskmoon314.com", email = "kp.campbell.he@duskmoon314.com" }
+external_document = { description = "Source code (GitHub)", url = "https://github.com/duskmoon314/httpbin-rs" }
+
+[openapi.servers.poem-openapi]
+description = "poem-openapi implementation of httpbin"
+url = "http://httpbin.rs"
+
+[openapi.servers.axum]
+description = "axum implementation of httpbin"
+url = "http://axum.httpbin.rs"

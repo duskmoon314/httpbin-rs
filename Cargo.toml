@@ -1,0 +1,25 @@
+[workspace]
+members = ["httpbin", "httpbin-poem-openapi", "httpbin-axum"]
+
+[workspace.package]
+version = "0.1.0"
+authors = ["duskmoon (Campbell He) <kp.campbell.he@duskmoon314.com>"]
+description = "HTTP Request & Response Service pretty like [httpbin](http://httpbin.org) but powered by Rust"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+
+[workspace.dependencies]
+anyhow = "1.0.70"
+clap = { version = "4.2.0", features = ["derive"] }
+httpbin = { path = "httpbin" }
+infer = "0.13.0"
+serde = { version = "1.0.159", features = ["derive"] }
+serde_json = "1.0.95"
+serde_qs = "0.12.0"
+tokio = { version = "1.27.0", features = ["full"] }
+tracing-subscriber = { version = "0.3.16", features = ["env-filter"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
