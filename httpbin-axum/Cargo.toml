@@ -1,0 +1,24 @@
+[package]
+name = "httpbin-axum"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+edition.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+axum = { version = "0.6.12", features = ["headers", "macros"] }
+axum-client-ip = "0.4.0"
+clap = { workspace = true }
+httpbin = { workspace = true }
+infer = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_qs = { workspace = true }
+tokio = { workspace = true }
+tower-http = { version = "0.4.0", features = ["normalize-path", "trace"] }
+tower-layer = "0.3.2"
+tracing-subscriber = { workspace = true }
