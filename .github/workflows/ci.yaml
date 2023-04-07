@@ -48,7 +48,7 @@ jobs:
     needs: [test]
     strategy:
       matrix:
-        impl: [poem-openapi, axum]
+        impl: [poem-openapi, axum, actix]
 
     steps:
       - name: Set up QEMU
