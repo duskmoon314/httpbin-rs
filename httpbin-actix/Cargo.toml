@@ -1,0 +1,17 @@
+[package]
+name = "httpbin-actix"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.3.1"
+anyhow = { workspace = true }
+env_logger = { workspace = true }
+httpbin = { workspace = true }
+infer = { workspace = true }
+log = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_qs = { workspace = true }
