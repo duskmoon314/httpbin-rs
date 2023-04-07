@@ -1,23 +1,25 @@
 use std::collections::HashMap;
 
-use axum::{headers::UserAgent, http::HeaderMap, routing::get, Json, Router, TypedHeader};
+use axum::{
+    headers::UserAgent as UserAgentHeader, http::HeaderMap, routing::get, Json, Router, TypedHeader,
+};
 use axum_client_ip::InsecureClientIp;
 use serde::Serialize;
 
 #[derive(Serialize)]
-struct HeadersRes {
+struct Headers {
     /// The incoming request's HTTP headers
     headers: HashMap<String, String>,
 }
 
 #[derive(Serialize)]
-struct IpRes {
+struct Ip {
     /// The incoming request's IP address
     origin: String,
 }
 
 #[derive(Serialize)]
-struct UserAgentRes {
+struct UserAgent {
     /// The incoming request's User-Agent header
     user_agent: String,
 }
@@ -29,7 +31,7 @@ pub fn api() -> Router {
         .route("/user-agent", get(user_agent))
 }
 
-async fn headers(headers: HeaderMap) -> Json<HeadersRes> {
+async fn headers(headers: HeaderMap) -> Json<Headers> {
     let headers = headers
         .iter()
         .map(|(k, v)| {
@@ -41,17 +43,17 @@ async fn headers(headers: HeaderMap) -> Json<HeadersRes> {
             )
         })
         .collect();
-    Json(HeadersRes { headers })
+    Json(Headers { headers })
 }
 
-async fn ip(origin: InsecureClientIp) -> Json<IpRes> {
-    Json(IpRes {
+async fn ip(origin: InsecureClientIp) -> Json<Ip> {
+    Json(Ip {
         origin: origin.0.to_string(),
     })
 }
 
-async fn user_agent(TypedHeader(user_agent): TypedHeader<UserAgent>) -> Json<UserAgentRes> {
-    Json(UserAgentRes {
+async fn user_agent(TypedHeader(user_agent): TypedHeader<UserAgentHeader>) -> Json<UserAgent> {
+    Json(UserAgent {
         user_agent: user_agent.to_string(),
     })
 }
