@@ -6,6 +6,7 @@ use serde::Deserialize;
 use thiserror::Error;
 
 #[derive(Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Base64Engine {
     Standard,
     StandardNoPad,
