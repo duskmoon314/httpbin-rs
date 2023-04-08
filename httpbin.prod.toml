@@ -10,9 +10,13 @@ contact = { name = "duskmoon (developer)", url = "https://duskmoon314.com", emai
 external_document = { description = "Source code (GitHub)", url = "https://github.com/duskmoon314/httpbin-rs" }
 
 [openapi.servers.poem-openapi]
-description = "poem-openapi implementation of httpbin"
-url = "http://httpbin.rs"
+description = "poem-openapi implementation"
+url = "https://httpbin.rs"
 
 [openapi.servers.axum]
-description = "axum implementation of httpbin"
-url = "http://axum.httpbin.rs"
+description = "axum implementation"
+url = "https://axum.httpbin.rs"
+
+[openapi.servers.actix]
+description = "actix implementation"
+url = "https://actix.httpbin.rs"
