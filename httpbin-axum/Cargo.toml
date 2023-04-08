@@ -19,6 +19,10 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 serde_qs = { workspace = true }
 tokio = { workspace = true }
-tower-http = { version = "0.4.0", features = ["normalize-path", "trace"] }
+tower-http = { version = "0.4.0", features = [
+    "cors",
+    "normalize-path",
+    "trace",
+] }
 tower-layer = "0.3.2"
 tracing-subscriber = { workspace = true }

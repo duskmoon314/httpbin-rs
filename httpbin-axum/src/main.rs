@@ -3,7 +3,7 @@ use std::net::SocketAddr;
 use anyhow::Result;
 use axum::{Router, Server, ServiceExt};
 use httpbin::cli::Cli;
-use tower_http::{normalize_path::NormalizePathLayer, trace::TraceLayer};
+use tower_http::{cors::CorsLayer, normalize_path::NormalizePathLayer, trace::TraceLayer};
 use tower_layer::Layer;
 
 mod data;
@@ -27,6 +27,7 @@ async fn main() -> Result<()> {
                         .merge(data::api())
                         .merge(request_inspection::api())
                         .merge(http_method::api())
+                        .layer(CorsLayer::permissive())
                         .layer(TraceLayer::new_for_http()),
                 )
                 .into_make_service_with_connect_info::<SocketAddr>(),
