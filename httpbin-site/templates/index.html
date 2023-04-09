@@ -1,0 +1,65 @@
+{% extends "juice/templates/index.html" %}
+
+<!-- customize hero -->
+{% block hero %}
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<section class="text-center">
+  <h1 class="heading-text" style="font-size: 50px">
+    httpbin, but powered by Rust
+  </h1>
+  <h3 class="title-text">
+    <b>Httpbin-rs</b> is a series of HTTP Request & Response Service pretty like
+    <a href="http://httpbin.org">httpbin</a> but powered by Rust
+  </h3>
+  <div>
+    <a
+      class="github-button"
+      href="https://github.com/duskmoon314/httpbin-rs"
+      data-size="large"
+      data-show-count="true"
+      aria-label="Star duskmoon314/httpbin-rs on GitHub"
+      >Star</a
+    >
+    <a
+      class="github-button"
+      href="https://github.com/duskmoon314/httpbin-rs/issues/new"
+      data-size="large"
+      data-show-count="true"
+      aria-label="Create a new issue of duskmoon314/httpbin-rs on GitHub"
+      >Issue</a
+    >
+  </div>
+</section>
+<img class="hero-image" style="width: 50%" src="{{ get_url(path="logo.svg") }}">
+
+<div
+  class="explore-more text"
+  onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})"
+>
+  Explore More ⇩
+</div>
+<style>
+  .hero section {
+    padding: 0 5rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .hero section {
+      padding: 0 2rem;
+    }
+
+    .hero-image {
+      display: none;
+    }
+  }
+</style>
+{% endblock hero %}
+
+<!-- customize footer -->
+{% block footer %}
+<footer>
+  <small class="subtext">
+    <a href="https://duskmoon314.com">duskmoon314</a> © 2023
+  </small>
+</footer>
+{% endblock footer %}

@@ -1,0 +1,3 @@
+[submodule "httpbin-site/themes/juice"]
+	path = httpbin-site/themes/juice
+	url = https://github.com/huhu/juice
