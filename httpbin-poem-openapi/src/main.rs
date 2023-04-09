@@ -56,6 +56,7 @@ async fn main() -> Result<()> {
                 .nest("/openapi-explorer", openapi_explorer)
                 .nest("/spec/json", spec_json)
                 .nest("/spec/yaml", spec_yaml)
+                .with(middleware::Cors::new().allow_origins_fn(|_| true))
                 .with(middleware::NormalizePath::new(
                     middleware::TrailingSlash::Trim,
                 ))
