@@ -1,6 +1,7 @@
-use std::{collections::HashMap, net::IpAddr};
+use std::net::IpAddr;
 
 use clap::Parser;
+use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
 #[derive(Parser, Debug)]
@@ -40,7 +41,7 @@ pub struct Config {
 pub struct OpenApiConfig {
     pub contact: OpenApiContact,
     pub external_document: OpenApiExternalDocument,
-    pub servers: HashMap<String, OpenApiServer>,
+    pub servers: IndexMap<String, OpenApiServer>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
