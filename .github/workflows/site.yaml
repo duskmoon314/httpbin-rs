@@ -1,4 +1,4 @@
-name: Check then Build
+name: Build site
 
 on:
   push:
@@ -12,46 +12,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: cache rust
-        uses: Swatinem/rust-cache@v2
-
-      - name: check fmt
-        run: cargo fmt --all --check
-      - name: check clippy
-        run: cargo clippy --no-deps -- -D warnings
-      - name: check build
-        run: cargo build --release
-      - name: check test
-        run: cargo test --release
-
-  changelog:
-    name: Changelog Check
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: Zomzog/changelog-checker@v1.3.0
-        with:
-          fileName: CHANGELOG.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   release:
     runs-on: ubuntu-latest
-    needs: [test]
-    strategy:
-      matrix:
-        impl: [poem-openapi, axum, actix]
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -69,7 +36,7 @@ jobs:
         with:
           images: duskmoon/httpbin-rs
           flavor: |
-            suffix=-${{ matrix.impl }},onlatest=true
+            suffix=-site,onlatest=true
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}
@@ -79,9 +46,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          build-args: |
-            HTTPBIN_IMPL=httpbin-${{ matrix.impl }}
+          context: "./httpbin-site"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
