@@ -5,7 +5,7 @@ use base64::Engine;
 use serde::Deserialize;
 use thiserror::Error;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Base64Engine {
     Standard,

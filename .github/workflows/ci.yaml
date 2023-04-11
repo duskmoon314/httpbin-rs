@@ -48,7 +48,7 @@ jobs:
     needs: [test]
     strategy:
       matrix:
-        impl: [poem-openapi, axum, actix]
+        impl: [poem-openapi, axum, actix, salvo]
 
     steps:
       - uses: actions/checkout@v3

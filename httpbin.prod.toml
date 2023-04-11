@@ -20,3 +20,7 @@ url = "https://axum.httpbin.rs"
 [openapi.servers.actix]
 description = "actix implementation"
 url = "https://actix.httpbin.rs"
+
+[openapi.servers.salvo]
+description = "salvo implementation"
+url = "https://salvo.httpbin.rs"

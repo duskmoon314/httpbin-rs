@@ -1,5 +1,11 @@
 [workspace]
-members = ["httpbin", "httpbin-poem-openapi", "httpbin-axum", "httpbin-actix"]
+members = [
+    "httpbin-actix",
+    "httpbin-axum",
+    "httpbin-poem-openapi",
+    "httpbin-salvo",
+    "httpbin",
+]
 
 [workspace.package]
 version = "0.1.0"
