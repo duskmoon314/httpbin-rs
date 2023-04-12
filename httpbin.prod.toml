@@ -24,3 +24,7 @@ url = "https://actix.httpbin.rs"
 [openapi.servers.salvo]
 description = "salvo implementation"
 url = "https://salvo.httpbin.rs"
+
+[openapi.servers.rocket]
+description = "rocket implementation"
+url = "https://rocket.httpbin.rs"
