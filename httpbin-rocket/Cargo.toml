@@ -1,0 +1,18 @@
+[package]
+name = "httpbin-rocket"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+edition.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+httpbin = { workspace = true }
+infer = { workspace = true }
+rocket = { version = "0.5.0-rc.3", features = ["json"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_qs = { workspace = true }
