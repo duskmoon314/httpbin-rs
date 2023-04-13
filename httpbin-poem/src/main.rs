@@ -22,6 +22,10 @@ async fn main() -> Result<()> {
         .attach(data::api)
         .attach(request_inspection::api)
         .attach(http_method::api)
+        .with(middleware::Cors::new().allow_origins_fn(|_| true))
+        .with(middleware::NormalizePath::new(
+            middleware::TrailingSlash::Trim,
+        ))
         .with(middleware::Tracing);
 
     Ok(Server::new(TcpListener::bind((cfg.ip, cfg.port)))
