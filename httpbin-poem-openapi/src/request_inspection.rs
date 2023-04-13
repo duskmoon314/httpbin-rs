@@ -59,8 +59,8 @@ enum IpRes {
     Ok(Json<Ip>),
 
     /// Could not determine the IP address through headers and socket address
-    #[oai(status = 404)]
-    NotFound(PlainText<String>),
+    #[oai(status = 400)]
+    BadRequest(PlainText<String>),
 }
 
 #[derive(Debug, Clone, Object)]
@@ -85,8 +85,8 @@ enum UserAgentRes {
     Ok(Json<UserAgent>),
 
     /// The incoming request does not have a User-Agent header
-    #[oai(status = 404)]
-    NotFound(PlainText<String>),
+    #[oai(status = 400)]
+    BadRequest(PlainText<String>),
 }
 
 pub struct Api;
@@ -117,7 +117,7 @@ impl Api {
             Some(origin) => IpRes::Ok(Json(Ip {
                 origin: origin.to_string(),
             })),
-            None => IpRes::NotFound(PlainText(
+            None => IpRes::BadRequest(PlainText(
                 "Could not determine the IP address through headers and socket address".to_string(),
             )),
         }
@@ -130,7 +130,7 @@ impl Api {
             Some(ua) => UserAgentRes::Ok(Json(UserAgent {
                 user_agent: ua.to_string(),
             })),
-            None => UserAgentRes::NotFound(PlainText(
+            None => UserAgentRes::BadRequest(PlainText(
                 "The incoming request does not have a User-Agent header".to_string(),
             )),
         }
