@@ -22,6 +22,7 @@ Httpbin-rs is currently implemented by the following HTTP frameworks:
 | framework                                               | url                                                |
 | :------------------------------------------------------ | :------------------------------------------------- |
 | [`poem-openapi`](https://crates.io/crates/poem-openapi) | [httpbin.rs](https://httpbin.rs/get)               |
+| [`poem`](https://crates.io/crates/poem)                 | [poem.httpbin.rs](https://poem.httpbin.rs/get)     |
 | [`axum`](https://crates.io/crates/axum)                 | [axum.httpbin.rs](https://axum.httpbin.rs/get)     |
 | [`actix-web`](https://crates.io/crates/actix-web)       | [actix.httpbin.rs](https://actix.httpbin.rs/get)   |
 | [`salvo`](https://crates.io/crates/salvo)               | [salvo.httpbin.rs](https://salvo.httpbin.rs/get)   |
