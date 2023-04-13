@@ -2,6 +2,7 @@
 members = [
     "httpbin-actix",
     "httpbin-axum",
+    "httpbin-poem",
     "httpbin-poem-openapi",
     "httpbin-rocket",
     "httpbin-salvo",

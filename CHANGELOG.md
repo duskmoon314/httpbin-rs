@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### implementations
 
-- poem-openapi, axum, actix, salvo, rocket
+- poem-openapi, poem, axum, actix, salvo, rocket
   - `HTTP Methods` support
   - `Request inspection` support
   - `Anything` support

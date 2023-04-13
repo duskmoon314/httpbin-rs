@@ -28,3 +28,7 @@ url = "https://salvo.httpbin.rs"
 [openapi.servers.rocket]
 description = "rocket implementation"
 url = "https://rocket.httpbin.rs"
+
+[openapi.servers.poem]
+description = "poem implementation"
+url = "https://poem.httpbin.rs"
