@@ -18,7 +18,7 @@ edition = "2021"
 
 [workspace.dependencies]
 anyhow = "1.0.70"
-clap = { version = "4.2.1", features = ["derive"] }
+clap = { version = "4.2.2", features = ["derive"] }
 env_logger = "0.10.0"
 httpbin = { path = "httpbin" }
 infer = "0.13.0"
