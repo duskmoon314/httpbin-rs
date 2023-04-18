@@ -1,5 +1,11 @@
 {% extends "juice/templates/index.html" %}
 
+<!-- customize head -->
+{% block head %}
+<meta name="title" content="{{ config.title }}" />
+<meta name="description" content="{{ config.description }}" />
+{% endblock head %}
+
 <!-- customize hero -->
 {% block hero %}
 <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -30,7 +36,12 @@
     >
   </div>
 </section>
-<img class="hero-image" style="width: 50%" src="{{ get_url(path="logo.svg") }}">
+<img
+  class="hero-image"
+  style="width: 50%"
+  alt="logo"
+  src="{{get_url(path='logo.svg') }}"
+/>
 
 <div
   class="explore-more text"
