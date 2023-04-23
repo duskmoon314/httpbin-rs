@@ -6,7 +6,7 @@ use poem_openapi::{
     ApiRequest, ApiResponse, Enum, OpenApi,
 };
 
-use super::{Api, DataTag};
+use super::DataTag;
 
 /// Base64 engines for encoding and decoding
 ///
@@ -65,6 +65,8 @@ enum Base64Res {
     #[oai(status = 400)]
     BadRequest(PlainText<String>),
 }
+
+pub struct Api;
 
 #[OpenApi(tag = "DataTag::Data")]
 impl Api {

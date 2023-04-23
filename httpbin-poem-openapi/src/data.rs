@@ -1,6 +1,7 @@
-use poem_openapi::Tags;
+use poem_openapi::{OpenApi, Tags};
 
 pub mod base64;
+pub mod uuid;
 
 #[derive(Tags)]
 enum DataTag {
@@ -8,4 +9,6 @@ enum DataTag {
     Data,
 }
 
-pub struct Api;
+pub fn api() -> impl OpenApi {
+    (base64::Api, uuid::Api)
+}

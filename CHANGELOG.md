@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use `clap` and `toml` to parse config file
 - Add `base64::encode` and `base64::decode` functions
+- Add `uuid::new_v{1,3,4,5,6,7,8}` functions
 
 #### implementations
 

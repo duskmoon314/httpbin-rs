@@ -17,7 +17,7 @@ async fn main() -> Result<()> {
     tracing_subscriber::fmt::init();
 
     let mut api_service = OpenApiService::new(
-        (http_method::Api, request_inspection::Api, data::Api),
+        (http_method::Api, request_inspection::Api, data::api()),
         "httpbin-rs",
         env!("CARGO_PKG_VERSION"),
     )
