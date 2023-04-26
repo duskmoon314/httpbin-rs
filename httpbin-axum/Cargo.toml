@@ -10,8 +10,8 @@ edition.workspace = true
 
 [dependencies]
 anyhow = { workspace = true }
-axum = { version = "0.6.16", features = ["headers", "macros"] }
-axum-client-ip = "0.4.0"
+axum = { version = "0.6.17", features = ["headers", "macros"] }
+axum-client-ip = "0.4.1"
 clap = { workspace = true }
 httpbin = { workspace = true }
 infer = { workspace = true }
