@@ -26,9 +26,9 @@ jobs:
       - name: check clippy
         run: cargo clippy --no-deps -- -D warnings
       - name: check build
-        run: cargo build --release
+        run: cargo build
       - name: check test
-        run: cargo test --release
+        run: cargo test
 
   changelog:
     name: Changelog Check
