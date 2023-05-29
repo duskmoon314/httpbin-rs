@@ -75,7 +75,7 @@ impl Api {
     async fn base64_encode(
         &self,
         /// The data to encode
-        /// 
+        ///
         /// The data can be binary or text
         data: Base64Req,
 
