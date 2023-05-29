@@ -3,6 +3,15 @@ use poem_openapi::{param::Query, payload::PlainText, ApiResponse, Enum, NewType,
 
 use super::DataTag;
 
+/// The namespace to use for the UUID
+///
+/// The following namespaces are supported:
+///
+/// - `dns` - 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+/// - `url` - 6ba7b811-9dad-11d1-80b4-00c04fd430c8
+/// - `oid` - 6ba7b812-9dad-11d1-80b4-00c04fd430c8
+/// - `x500` - 6ba7b814-9dad-11d1-80b4-00c04fd430c8
+/// - custom - any UUID in string form
 #[derive(NewType)]
 struct UuidNamespace(String);
 
@@ -18,6 +27,16 @@ impl From<UuidNamespace> for httpbin::data::uuid::UuidNamespace {
     }
 }
 
+/// The format to use for the UUID
+///
+/// The default format is `hyphenated`.
+///
+/// The following formats are supported:
+///
+/// - `hyphenated` - 8-4-4-4-12
+/// - `simple` - 32 hex digits
+/// - `urn` - urn:uuid:8-4-4-4-12
+/// - `braced` - {8-4-4-4-12}
 #[derive(Enum, Default)]
 #[oai(rename_all = "snake_case")]
 enum UuidFormat {
@@ -65,9 +84,17 @@ impl Api {
     #[oai(path = "/v1", method = "get")]
     async fn uuid_v1(
         &self,
+        /// An optional timestamp to use for the UUID. If not provided, the current time will be used.
         timestamp: Query<Option<u64>>,
+
+        /// An optional counter to use for the UUID. If not provided, 0 will be used.
         counter: Query<Option<u16>>,
-        #[oai(explode = false)] node_id: Query<[u8; 6]>,
+
+        /// The node ID to use for the UUID. The length must be 6.
+        #[oai(explode = false)]
+        node_id: Query<[u8; 6]>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let timestamp = timestamp.and_then(|timestamp| {
@@ -84,8 +111,13 @@ impl Api {
     #[oai(path = "/v3", method = "get")]
     async fn uuid_v3(
         &self,
+        /// The namespace to use for the UUID.
         namespace: Query<UuidNamespace>,
+
+        /// The name to use for the UUID.
         name: Query<String>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let format = format.0.unwrap_or_default();
@@ -98,7 +130,11 @@ impl Api {
 
     /// Generate a v4 UUID
     #[oai(path = "/v4", method = "get")]
-    async fn uuid_v4(&self, format: Query<Option<UuidFormat>>) -> Result<UuidRes> {
+    async fn uuid_v4(
+        &self,
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
+        format: Query<Option<UuidFormat>>,
+    ) -> Result<UuidRes> {
         let format = format.0.unwrap_or_default();
 
         let uuid = httpbin::data::uuid::new_v4(format.into());
@@ -110,8 +146,13 @@ impl Api {
     #[oai(path = "/v5", method = "get")]
     async fn uuid_v5(
         &self,
+        /// The namespace to use for the UUID.
         namespace: Query<UuidNamespace>,
+
+        /// The name to use for the UUID.
         name: Query<String>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let format = format.0.unwrap_or_default();
@@ -126,9 +167,17 @@ impl Api {
     #[oai(path = "/v6", method = "get")]
     async fn uuid_v6(
         &self,
+        /// An optional timestamp to use for the UUID. If not provided, the current time will be used.
         timestamp: Query<Option<u64>>,
+
+        /// An optional counter to use for the UUID. If not provided, 0 will be used.
         counter: Query<Option<u16>>,
-        #[oai(explode = false)] node_id: Query<[u8; 6]>,
+
+        /// The node ID to use for the UUID. The length must be 6.
+        #[oai(explode = false)]
+        node_id: Query<[u8; 6]>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let timestamp = timestamp.and_then(|timestamp| {
@@ -145,8 +194,13 @@ impl Api {
     #[oai(path = "/v7", method = "get")]
     async fn uuid_v7(
         &self,
+        /// An optional timestamp to use for the UUID. If not provided, the current time will be used.
         timestamp: Query<Option<u64>>,
+
+        /// An optional counter to use for the UUID. If not provided, 0 will be used.
         counter: Query<Option<u16>>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let timestamp = timestamp.and_then(|timestamp| {
@@ -163,7 +217,10 @@ impl Api {
     #[oai(path = "/v8", method = "get")]
     async fn uuid_v8(
         &self,
+        /// The buffer to use for the UUID. The length must be 16.
         buf: Query<[u8; 16]>,
+
+        /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let format = format.0.unwrap_or_default();

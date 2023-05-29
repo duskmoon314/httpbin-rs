@@ -74,6 +74,9 @@ impl Api {
     #[oai(path = "/base64/encode/:engine", method = "post")]
     async fn base64_encode(
         &self,
+        /// The data to encode
+        /// 
+        /// The data can be binary or text
         data: Base64Req,
 
         /// Base64 engines for encoding and decoding
@@ -82,7 +85,11 @@ impl Api {
         ///
         /// The `custom` engine allows you to specify your own alphabet and padding
         engine: Path<Base64Engine>,
+
+        /// The alphabet to use for encoding
         alphabet: Query<Option<String>>,
+
+        /// Whether to use padding
         pad: Query<Option<bool>>,
     ) -> Result<Base64Res> {
         let config = match engine.0 {
@@ -120,6 +127,7 @@ impl Api {
     #[oai(path = "/base64/decode/:engine", method = "post")]
     async fn base64_decode(
         &self,
+        /// The string to decode
         data: PlainText<String>,
 
         /// Base64 engines for encoding and decoding
@@ -128,7 +136,11 @@ impl Api {
         ///
         /// The `custom` engine allows you to specify your own alphabet and padding
         engine: Path<Base64Engine>,
+
+        /// The alphabet to use for decoding
         alphabet: Query<Option<String>>,
+
+        /// Whether to use padding
         pad: Query<Option<bool>>,
     ) -> Result<Base64Res> {
         let config = match engine.0 {
