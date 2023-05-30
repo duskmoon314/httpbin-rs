@@ -17,13 +17,8 @@ struct UuidNamespace(String);
 
 impl From<UuidNamespace> for httpbin::data::uuid::UuidNamespace {
     fn from(namespace: UuidNamespace) -> Self {
-        match namespace.0.as_str() {
-            "dns" => httpbin::data::uuid::UuidNamespace::Dns,
-            "url" => httpbin::data::uuid::UuidNamespace::Url,
-            "oid" => httpbin::data::uuid::UuidNamespace::Oid,
-            "x500" => httpbin::data::uuid::UuidNamespace::X500,
-            _ => httpbin::data::uuid::UuidNamespace::Custom(namespace.0),
-        }
+        // This is safe because the target will be validated by the UUID library
+        namespace.0.parse().unwrap()
     }
 }
 
@@ -92,7 +87,7 @@ impl Api {
 
         /// The node ID to use for the UUID. The length must be 6.
         #[oai(explode = false)]
-        node_id: Query<[u8; 6]>,
+        node_id: Query<Vec<u8>>,
 
         /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
@@ -102,7 +97,8 @@ impl Api {
         });
         let format = format.0.unwrap_or_default();
 
-        let uuid = httpbin::data::uuid::new_v1(timestamp, &node_id, format.into());
+        let uuid = httpbin::data::uuid::new_v1(timestamp, node_id.0.into(), format.into())
+            .map_err(|e| UuidRes::BadRequest(PlainText(e.to_string())))?;
 
         Ok(UuidRes::Ok(PlainText(uuid)))
     }
@@ -112,6 +108,14 @@ impl Api {
     async fn uuid_v3(
         &self,
         /// The namespace to use for the UUID.
+        ///
+        /// The following namespaces are supported:
+        ///
+        /// - `dns` - 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+        /// - `url` - 6ba7b811-9dad-11d1-80b4-00c04fd430c8
+        /// - `oid` - 6ba7b812-9dad-11d1-80b4-00c04fd430c8
+        /// - `x500` - 6ba7b814-9dad-11d1-80b4-00c04fd430c8
+        /// - custom - any UUID in string form
         namespace: Query<UuidNamespace>,
 
         /// The name to use for the UUID.
@@ -146,7 +150,15 @@ impl Api {
     #[oai(path = "/v5", method = "get")]
     async fn uuid_v5(
         &self,
-        /// The namespace to use for the UUID.
+        /// The namespace to use for the UUID
+        ///
+        /// The following namespaces are supported:
+        ///
+        /// - `dns` - 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+        /// - `url` - 6ba7b811-9dad-11d1-80b4-00c04fd430c8
+        /// - `oid` - 6ba7b812-9dad-11d1-80b4-00c04fd430c8
+        /// - `x500` - 6ba7b814-9dad-11d1-80b4-00c04fd430c8
+        /// - custom - any UUID in string form
         namespace: Query<UuidNamespace>,
 
         /// The name to use for the UUID.
@@ -175,7 +187,7 @@ impl Api {
 
         /// The node ID to use for the UUID. The length must be 6.
         #[oai(explode = false)]
-        node_id: Query<[u8; 6]>,
+        node_id: Query<Vec<u8>>,
 
         /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
@@ -185,7 +197,8 @@ impl Api {
         });
         let format = format.0.unwrap_or_default();
 
-        let uuid = httpbin::data::uuid::new_v6(timestamp, &node_id, format.into());
+        let uuid = httpbin::data::uuid::new_v6(timestamp, node_id.0.into(), format.into())
+            .map_err(|e| UuidRes::BadRequest(PlainText(e.to_string())))?;
 
         Ok(UuidRes::Ok(PlainText(uuid)))
     }
@@ -218,14 +231,16 @@ impl Api {
     async fn uuid_v8(
         &self,
         /// The buffer to use for the UUID. The length must be 16.
-        buf: Query<[u8; 16]>,
+        #[oai(explode = false)]
+        buf: Query<Vec<u8>>,
 
         /// An optional format to use for the UUID. If not provided, the default format (hyphenated) will be used.
         format: Query<Option<UuidFormat>>,
     ) -> Result<UuidRes> {
         let format = format.0.unwrap_or_default();
 
-        let uuid = httpbin::data::uuid::new_v8(&buf, format.into());
+        let uuid = httpbin::data::uuid::new_v8(buf.0.into(), format.into())
+            .map_err(|e| UuidRes::BadRequest(PlainText(e.to_string())))?;
 
         Ok(UuidRes::Ok(PlainText(uuid)))
     }
