@@ -20,7 +20,7 @@ async fn main() {
     let router = Router::new()
         .hoop(cors)
         .hoop(TrailingSlash::new_remove())
-        .hoop(Logger::default())
+        .hoop(Logger)
         .push(data::api())
         .push(http_method::api())
         .push(request_inspection::api());
