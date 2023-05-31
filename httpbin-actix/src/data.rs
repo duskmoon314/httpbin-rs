@@ -1,7 +1,8 @@
 use actix_web::web::ServiceConfig;
 
-pub mod base64;
+mod base64;
+mod uuid;
 
 pub fn api(cfg: &mut ServiceConfig) {
-    cfg.configure(base64::api);
+    cfg.configure(base64::api).configure(uuid::api);
 }
