@@ -2040,9 +2040,9 @@ checksum = "6ac9a59f73473f1b8d852421e59e64809f025994837ef743615c6d0c5b305160"
 
 [[package]]
 name = "poem"
-version = "1.3.55"
+version = "1.3.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c0608069d4999c3c02d49dff261663f2e73a8f7b00b7cd364fb5e93e419dafa1"
+checksum = "0a56df40b79ebdccf7986b337f9b0e51ac55cd5e9d21fb20b6aa7c7d49741854"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -2078,9 +2078,9 @@ dependencies = [
 
 [[package]]
 name = "poem-derive"
-version = "1.3.55"
+version = "1.3.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3b839bad877aa933dd00901abd127a44496130e3def48e079d60e43f2c8a33cc"
+checksum = "1701f977a2d650a03df42c053686ea0efdb83554f34c7b026b89383c0a1b7846"
 dependencies = [
  "proc-macro-crate",
  "proc-macro2",
@@ -2090,9 +2090,9 @@ dependencies = [
 
 [[package]]
 name = "poem-openapi"
-version = "2.0.26"
+version = "2.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1077defedfd8ff15990bb42993970ac75bc46dd8a5b3c0b452ab4e2041b825a4"
+checksum = "3e26f78b6195ea1b7a16f46bda1961c598e5a66912f2aa1b8b7a2f395aebb9fc"
 dependencies = [
  "base64 0.21.0",
  "bytes",
@@ -2114,9 +2114,9 @@ dependencies = [
 
 [[package]]
 name = "poem-openapi-derive"
-version = "2.0.26"
+version = "2.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75bf9dc3b9c42bb8744bc633f9581f740b429122e1840fa37c06beeefc35a719"
+checksum = "88c3e2975c930dc72c024e75b230c3b6058fb3a746d5739b83aa8f28ab1a42d4"
 dependencies = [
  "darling 0.14.4",
  "http",
