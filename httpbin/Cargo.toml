@@ -14,7 +14,7 @@ clap = { workspace = true }
 indexmap = { version = "1.9.3", features = ["serde"] }
 serde = { workspace = true }
 serde_with = { workspace = true }
-thiserror = "1.0.40"
+thiserror = "1.0.44"
 toml = "0.7.6"
 uuid = { version = "1.4.1", features = [
     "v1",
