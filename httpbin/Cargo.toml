@@ -11,7 +11,7 @@ edition.workspace = true
 [dependencies]
 base64 = "0.21.0"
 clap = { workspace = true }
-indexmap = { version = "1.9.3", features = ["serde"] }
+indexmap = { version = "2.0.0", features = ["serde"] }
 serde = { workspace = true }
 serde_with = { workspace = true }
 thiserror = "1.0.44"
