@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: cache rust
         uses: Swatinem/rust-cache@v2
@@ -36,7 +36,7 @@ jobs:
     if: github.event_name == 'pull_request'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: Zomzog/changelog-checker@v1.3.0
         with:
           fileName: CHANGELOG.md
@@ -51,7 +51,7 @@ jobs:
         impl: [poem-openapi, axum, actix, salvo, rocket, poem]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
