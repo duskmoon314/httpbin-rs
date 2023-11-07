@@ -15,7 +15,7 @@ indexmap = { version = "2.0.0", features = ["serde"] }
 serde = { workspace = true }
 serde_with = { workspace = true }
 thiserror = "1.0.44"
-toml = "0.7.6"
+toml = "0.8.8"
 uuid = { version = "1.4.1", features = [
     "v1",
     "v3",
