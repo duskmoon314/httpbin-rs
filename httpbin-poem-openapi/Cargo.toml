@@ -14,7 +14,7 @@ clap = { workspace = true }
 httpbin = { workspace = true }
 infer = { workspace = true }
 poem = "1.3.56"
-poem-openapi = { version = "2.0.27", features = [
+poem-openapi = { version = "3.0.6", features = [
     "swagger-ui",
     "rapidoc",
     "redoc",
