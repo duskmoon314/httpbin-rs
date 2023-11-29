@@ -10,7 +10,7 @@ edition.workspace = true
 
 [dependencies]
 actix-cors = "0.6.4"
-actix-web = "4.3.1"
+actix-web = "4.4.0"
 anyhow = { workspace = true }
 env_logger = { workspace = true }
 httpbin = { workspace = true }
