@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 
-use axum::{
-    headers::UserAgent as UserAgentHeader, http::HeaderMap, routing::get, Json, Router, TypedHeader,
-};
+use axum::{http::HeaderMap, routing::get, Json, Router};
 use axum_client_ip::InsecureClientIp;
+use axum_extra::{headers::UserAgent as UserAgentHeader, TypedHeader};
 use serde::Serialize;
 
 #[derive(Serialize)]

@@ -3,12 +3,12 @@ use std::collections::HashMap;
 use axum::{
     body::Bytes,
     extract::RawQuery,
-    headers::ContentType,
     http::{HeaderMap, Method, Uri},
     routing::{delete, get, patch, post, put},
-    Json, Router, TypedHeader,
+    Json, Router,
 };
 use axum_client_ip::InsecureClientIp;
+use axum_extra::{headers::ContentType, TypedHeader};
 use serde::Serialize;
 
 #[derive(Serialize)]
