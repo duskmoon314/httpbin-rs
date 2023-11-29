@@ -31,7 +31,7 @@ impl<'r> FromRequest<'r> for UserAgentHeader<'r> {
     async fn from_request(request: &'r Request<'_>) -> rocket::request::Outcome<Self, Self::Error> {
         match request.headers().get_one("User-Agent") {
             Some(user_agent) => rocket::request::Outcome::Success(UserAgentHeader(user_agent)),
-            None => rocket::request::Outcome::Failure((
+            None => rocket::request::Outcome::Error((
                 rocket::http::Status::BadRequest,
                 anyhow::anyhow!("The incoming request does not have a User-Agent header"),
             )),

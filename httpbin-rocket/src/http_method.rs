@@ -71,7 +71,7 @@ impl Handler for Anything {
         let body = match data.open(512.kibibytes()).into_bytes().await {
             // TODO: Handle incomplete body
             Ok(body) => body.into_inner(),
-            Err(_) => return Outcome::failure(Status::InternalServerError),
+            Err(_) => return Outcome::error(Status::InternalServerError),
         };
 
         let body_string = match String::from_utf8(body.clone()) {
