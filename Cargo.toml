@@ -18,7 +18,7 @@ license = "MIT OR Apache-2.0"
 edition = "2021"
 
 [workspace.dependencies]
-anyhow = "1.0.75"
+anyhow = "1.0.82"
 clap = { version = "4.4.10", features = ["derive"] }
 env_logger = "0.10.1"
 httpbin = { path = "httpbin" }
