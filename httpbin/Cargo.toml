@@ -9,7 +9,7 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-base64 = "0.21.5"
+base64 = "0.22.0"
 clap = { workspace = true }
 indexmap = { version = "2.1.0", features = ["serde"] }
 serde = { workspace = true }
