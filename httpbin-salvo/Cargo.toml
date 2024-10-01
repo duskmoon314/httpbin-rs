@@ -12,7 +12,7 @@ edition.workspace = true
 anyhow = { workspace = true }
 httpbin = { workspace = true }
 infer = { workspace = true }
-salvo = { version = "0.37.9", features = [
+salvo = { version = "0.73.0", features = [
     "anyhow",
     "logging",
     "cors",
